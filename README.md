@@ -1,6 +1,6 @@
 # Introducere în robotică cu Arduino - Tema 1
 
-Pârjoleanu Andi - Olivian Grupa 251
+Pârjoleanu Andi - Olivian, Grupa 251
 
 Joc ales : Curse (Racing game)
 
