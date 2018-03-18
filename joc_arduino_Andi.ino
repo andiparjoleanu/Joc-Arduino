@@ -56,29 +56,29 @@ int vehicle :: shape (int x, int y)                                             
     for (int j = y - 1; j < y + 2; j++)                                                          //conturat obiectul este deja aprins, vehiculul nu poate fi reprezentat, exceptand
               for (int i = x - 1; i < x + 2; i++)                                                //led-ul corespunzator unui element bonus, codificat cu cifra 2 pe tabloul matrix
                   if (a[i - x + 1][j - y + 1] == 1)                                  
-                        {
-                             if (matrix[j][i + 2] == 1)
-                                   {
-                                        if(recordBonus == 0)
-                                             return 0;
-                                   }
+                  {
+                      if (matrix[j][i + 2] == 1)
+                      {
+                         if(recordBonus == 0)
+                           return 0;
+                      }
                              
-                             if (matrix[j][i + 2] == 2)                                           //jucatorul primeste bonus
-                                      {
-                                         recordBonus = bonus();
-                                         bonusx = 8;
-                                      }
+                      if (matrix[j][i + 2] == 2)                                           //jucatorul primeste bonus
+                      {
+                         recordBonus = bonus();
+                         bonusx = 8;
+                      }
                                   
                               
-                              lc.setLed (0, j, i, true); 
-                              matrix[j][i + 2] = 1;
-                              if(recordBonus == 1)
-                                 if((time - bonusTime) > 5000)
-                                    {
-                                        recordBonus = 0;
-                                    }
+                      lc.setLed (0, j, i, true); 
+                      matrix[j][i + 2] = 1;
+                      if(recordBonus == 1)
+                         if((time - bonusTime) > 5000)
+                         {
+                              recordBonus = 0;
+                         }
                                              
-                        }
+                   }
                 
      cen1 = x;
      cen2 = y;
@@ -91,16 +91,16 @@ void vehicle :: erase (int x, int y)                                            
    for (int j = y - 1; j < y + 2; j++)
         for (int i = x - 1; i < x + 2; i++)
              if (a[i - x + 1][j - y + 1] == 1 && matrix[j][i + 2] == 1)
-                {
-                   lc.setLed (0, j, i, false);
-                   matrix[j][i + 2] = 0;
-                }
+             {
+                 lc.setLed (0, j, i, false);
+                 matrix[j][i + 2] = 0;
+             }
     
 }
 
 int * vehicle :: operator [] (int i)
 {
-        return a[i];  
+    return a[i];  
 }
 
 
@@ -249,41 +249,40 @@ void drawBonus()                                                                
       matrix[bonusy][bonusx + 2] = 2;
     }
     else if (bonusx == 7)
-          {
+         {
               lc.setLed (0, bonusy, bonusx, false);
               matrix[bonusy][bonusx + 2] = 0;
               bonusx++; 
-          }
+         }
 }
 
  
 void eraseEnemies (vehicle ** & b, int n)                                                       //functia apeleaza metoda erase() pentru adversarii prezenti
 {                                                                                               //pe matrice la un moment dat
   for (int i = 0; i < n; i++)
-        {
-          int p1 = b[i] -> row(), p2 = b[i] -> col();
-          b[i] -> erase (p1, p2);
-        }
+     {
+       int p1 = b[i] -> row(), p2 = b[i] -> col();
+       b[i] -> erase (p1, p2);
+     }
 }
 
 int shapeEnemies (vehicle ** & b, int n)                                                       //functia apeleaza metoda shape() pentru adversarii prezenti
 {                                                                                              //pe matrice la un moment dat
    for (int i = 0; i < n; i++)
-        {
-          int p1 = b[i] -> row(), p2 = b[i] -> col();
-          b[i] -> shape (p1, p2);
-                 
-        }
+   {
+      int p1 = b[i] -> row(), p2 = b[i] -> col();
+      b[i] -> shape (p1, p2);                 
+   }
 }
 
 void modifyEnemies (vehicle ** & b, int n)                                                     //functia determina modificarea pozitiei adversarilor prezenti
 {                                                                                              //la un moment dat pe ecran in raport cu pozitia curenta a vehiculului
    for (int i = 0; i < n; i++)                                                                 //cursor
-        {
-          int m = b[i] -> row();
-          m++;
-          b[i] -> row() = m;
-        }
+   {
+      int m = b[i] -> row();
+      m++;
+      b[i] -> row() = m;
+   }
 }
 
 void pushBackEnemy (vehicle ** & b, int & n, bool type)                                        //functia determina adaugarea unui adversar in sirul de adversari 
@@ -314,13 +313,14 @@ void pushBackEnemy (vehicle ** & b, int & n, bool type)                         
                  delete c[i];
        delete [] c; 
     }
-    else {
-            b = new vehicle *[1];
-            if (type)
-               b[0] = new car;
-              else b[0] = new spaceship;
-            b[0] -> row() = -2;
-          }
+    else
+    {
+      b = new vehicle *[1];
+      if (type)
+         b[0] = new car;
+      else b[0] = new spaceship;
+       b[0] -> row() = -2;
+    }
     
     n++;
 }
@@ -343,17 +343,17 @@ void popFrontEnemy (vehicle ** & b, int & n, bool type)                         
         delete [] b;
         
         if (n > 1)
-               {
-                   b = new vehicle * [n - 1];
-                   for (int i = 0; i < n - 1; i++)
-                     if (type)
-                        b[i] = new car;
-                      else b[i] = new spaceship;
+        {
+           b = new vehicle * [n - 1];
+           for (int i = 0; i < n - 1; i++)
+               if (type)
+                   b[i] = new car;
+              else b[i] = new spaceship;
                   
-                   for (int i = 1; i < n; i++)
-                        * (b[i - 1]) = * (c[i]);
-               } 
-           else b = NULL;
+            for (int i = 1; i < n; i++)
+                * (b[i - 1]) = * (c[i]);
+         } 
+         else b = NULL;
            
         for (int i = 0; i < n; i++)
                  delete c[i]; 
@@ -376,15 +376,16 @@ void wall (int x, int & y)                                                      
 void direct (int & y, int iny)                                                                //functia compara pozitia anterioara a vehiculului cursor
 {                                                                                             //cu pozitia citita de pe joystick
       if (iny > 520)
-            {
-                if (y + 1 <= 5)
-                     y++;
-            }
-           else if (iny < 500)
-                       {
-                          if (y - 1 >= 2)
-                              y --;
-                       }
+      {
+         if (y + 1 <= 5)
+            y++;
+      }
+      else
+      if (iny < 500)
+      {
+          if (y - 1 >= 2)
+             y --;
+      }
 }
 
 void destroy (vehicle & a, int x, int y)                                                     //functia este apelata la accidentarea vehiculului cursor
@@ -392,19 +393,19 @@ void destroy (vehicle & a, int x, int y)                                        
   for (int i = x - 1; i < x + 2; i++)                                                        //jucatorului de pierderea unei vieti
        for (int j = y - 1; j < y + 2; j++)
               if ( a[i - x + 1][j - y + 1])
-                  {
-                     lc.setLed (0, j, i, false);
-                     matrix[j][i + 2] = 0;
-                  } 
+                {
+                   lc.setLed (0, j, i, false);
+                   matrix[j][i + 2] = 0;
+                } 
 
   delay (400);
   for (int i = x - 1; i < x + 2; i++)
        for (int j = y - 1; j < y + 2; j++)
               if (a[i - x + 1][j - y + 1])
-                   {
-                      lc.setLed (0, j, i, true);
-                      matrix[j][i + 2] = 1;
-                   }  
+                 {
+                    lc.setLed (0, j, i, true);
+                    matrix[j][i + 2] = 1;
+                 }  
   delay (400);
    for (int i = x - 1; i < x + 2; i++)
        for (int j = y - 1; j < y + 2; j++)
@@ -491,26 +492,26 @@ void load (int c)                                                               
       for (int i = 0; i < random (2, 5); i++)                                                    //se afiseaza de mai multe ori o imagine care sugereaza incarcarea jocului 
          {                                                           
                  for (int j = 2; j <= 5; j++)
-                      {
-                        lc.setLed (0, j, 3, true);
-                        lc.setLed (0, j, 4, true);
-                        delay (200);
-                      }
+                 {
+                     lc.setLed (0, j, 3, true);
+                     lc.setLed (0, j, 4, true);
+                     delay (200);
+                  }
 
                   for (int j = 2; j <= 5; j++)
                   {
-                      lc.setLed (0, j, 3, false);
-                      lc.setLed (0, j, 4, false);
+                     lc.setLed (0, j, 3, false);
+                     lc.setLed (0, j, 4, false);
                   }
          }
      lc.clearDisplay (0);                                                                       //se sterge ecranul si se contureaza o alta imagine prin care se sugereaza
      lc.setLed (0, 2, 5, true);                                                                 //incheierea procesului de incarcare
      delay (50);
      for (int i = 6; i >= 3; i --)
-           {
-                lc.setLed (0, 3 - i + 6, i, true);
-                delay (50);
-           }
+     {
+         lc.setLed (0, 3 - i + 6, i, true);
+         delay (50);
+     }
      LCD.clear();
      LCD.setCursor (0, 0);
      LCD.print ("* Cel mai mare");                                                              //se afiseaza pe ecran cel mai mare scor, care este memorat in obiectul EEPROM
@@ -554,10 +555,10 @@ void status()
   LCD.print ("Vieti: ");
   LCD.setCursor (8, 1);
   for (int i = 0; i < lives; i++)
-         {
-           LCD.setCursor (8 + i, 1);
-           LCD.print ("*");
-         } 
+  {
+     LCD.setCursor (8 + i, 1);
+     LCD.print ("*");
+  } 
    
 }
 
@@ -574,19 +575,19 @@ void saveScore(int points)                                                      
    {
       address = 0;
       while (address < 4)
-        {
-           if (points > 255)
-             {
-                EEPROM.write (address, 255);
-                points = points - 255;
-              }
-              else
-               {
-                  EEPROM.write (address, points);
-                  points = 0;
-               }
-            address++;
-         }  
+      {
+         if (points > 255)
+         {
+            EEPROM.write (address, 255);
+            points = points - 255;
+         }
+         else
+         {
+            EEPROM.write (address, points);
+            points = 0;
+         }
+         address++;
+       }  
    }
 }
 
@@ -601,26 +602,26 @@ void race (vehicle & a, vehicle ** & b, bool vtype, int & n, int level)         
         status();                                                                                  //se afiseaza progresul jucatorului
         direct (py, yj);                                                                           //Daca exista adversari pe ecran,
         if (n != 0)                                                                                //se mai adauga un obiect in vectorul de adversari doar daca
-          {                                                                                        //pozitia ultimului element din vector respecta conditia din instructiunea if
+        {                                                                                        //pozitia ultimului element din vector respecta conditia din instructiunea if
             int m = b[n - 1] -> row();
             if (m == aleator() + 5)
-                 {
-                      pushBackEnemy (b, n, vtype);
-                      if (bonusx == 8 && score % 8 == random (0, 8))                               //se genereaza bonus in functie de o regula "pseudoaleatoare"
-                           {
-                               bonusx = random(-2, 0);
-                               int t = b[n - 1] -> col();
-                               bonusy = (t == 5)? 2 : 5;
-                           }
-                 }
+            {
+                pushBackEnemy (b, n, vtype);
+                if (bonusx == 8 && score % 8 == random (0, 8))                               //se genereaza bonus in functie de o regula "pseudoaleatoare"
+                  {
+                      bonusx = random(-2, 0);
+                      int t = b[n - 1] -> col();
+                      bonusy = (t == 5)? 2 : 5;
+                  }
+             }
                  
             if (b[0] -> row() == 10)
-                {
-                  score++;
-                  popFrontEnemy (b, n, vtype);                                                     //daca primul element din vectorul de adversari are coordonata linie
-                }                                                                                  //egala cu 10, inseamna ca adversarul nu se mai afla pe ecran, adica vehiculul controlat
-          }                                                                                        //l - a depasit, iar jucatorul primeste un punct
-          else pushBackEnemy (b, n, vtype);
+            {
+               score++;
+               popFrontEnemy (b, n, vtype);                                                     //daca primul element din vectorul de adversari are coordonata linie
+            }                                                                                  //egala cu 10, inseamna ca adversarul nu se mai afla pe ecran, adica vehiculul controlat
+        }                                                                                        //l - a depasit, iar jucatorul primeste un punct
+        else pushBackEnemy (b, n, vtype);
       
    
         if (currentTime - raceTime > speed (level))                                                //se modifica pozitia adversarilor pe matrice in functie de viteza stabilita pe nivel
@@ -634,22 +635,22 @@ void race (vehicle & a, vehicle ** & b, bool vtype, int & n, int level)         
 
                      
         if (a.shape (px, py) == 0)                                                                 //daca pe pozitia curenta a cursorului se gaseste un adversar,      
-              {                                                                                    //jucatorul pierde viata si se restabilesc conditiile initiale de joc
-                destroy (a, px, py); 
-                reload (a, b, n);
-                cleanMatrix();
-                lives --;
-                if (lives == 0)                                                                    //daca jucatorul nu mai are vieti, se reia jocul de la meniul de intrare
-                   {
-                     OK = 0;
-                     saveScore(score);
-                     score = 0;
-                     loops = 0;
-                     LCD.clear();
-                   }
-                lc.clearDisplay (0);
-              }
-          time = currentTime;
+        {                                                                                    //jucatorul pierde viata si se restabilesc conditiile initiale de joc
+            destroy (a, px, py); 
+            reload (a, b, n);
+            cleanMatrix();
+            lives --;
+            if (lives == 0)                                                                    //daca jucatorul nu mai are vieti, se reia jocul de la meniul de intrare
+            {
+                 OK = 0;
+                 saveScore(score);
+                 score = 0;
+                 loops = 0;
+                 LCD.clear();
+             }
+             lc.clearDisplay (0);
+         }
+         time = currentTime;
       }
 }
 
@@ -674,25 +675,25 @@ int end_game()                                                                  
 {                                                                                                  //Jocul incepe dupa apasarea unui buton
     int signal;                                                                                    //obiectele vehicul vor fi create in functie de butonul apasat.
     if (loops == 0)
-       {
+    {
            
-           lives = 3;
-           bonusx = 8;
-           load (OK);
-           int s1 = digitalRead (BUTTON1);
-           int s2 = digitalRead (BUTTON2);
-           if (s1 == 0)
-              vehicleType = 1;
-           else if (s2 == 0)
-                   vehicleType = 0;
-           signal = ! (s1 | s2);
-           cleanMatrix();
-           raceTime = millis();
-           time = millis();
-           bonusTime = - 10000;
-           OK = 1;
-       }
-       else signal = 0;
+       lives = 3;
+       bonusx = 8;
+       load (OK);
+       int s1 = digitalRead (BUTTON1);
+       int s2 = digitalRead (BUTTON2);
+       if (s1 == 0)
+          vehicleType = 1;
+       else if (s2 == 0)
+               vehicleType = 0;
+       signal = ! (s1 | s2);
+       cleanMatrix();
+       raceTime = millis();
+       time = millis();
+       bonusTime = - 10000;
+       OK = 1;
+     }
+     else signal = 0;
 
      return signal;
 }
@@ -712,7 +713,7 @@ void loop()
        if(score < 700)
           race (* a, b, vehicleType, ncars, calcLevel (score));                                     //daca jucatorul nu a atins scorul maxim de 700 de puncte, participa in continuae la cursa
        else if(score == 700)
-                playAgain(700);
+               playAgain(700);
        yj = analogRead (Y);
     }
 }
