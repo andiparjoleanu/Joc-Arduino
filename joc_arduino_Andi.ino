@@ -63,7 +63,7 @@ int vehicle :: shape (int x, int y)                                             
                         return 0;
                  }
                           
-                 if (matrix[j][i + 2] == 2)                                                    //jucatorul primeste bonus
+                 if (matrix[j][i + 2] == 2)                                                         //jucatorul primeste bonus
                  {
                       recordBonus = bonus();
                       bonusx = 8;
@@ -166,8 +166,8 @@ bool car :: bonus ()
 
 car & car :: operator = (car & t)
 {
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
+    for (int i = 0; i < 3; i ++)
+        for (int j = 0; j < 3; j ++)
             a[i][j] = t.a[i][j];
     cen1 = t.row();
     cen2 = t.col();
@@ -202,8 +202,8 @@ spaceship :: spaceship()
 
 spaceship & spaceship :: operator = (spaceship & t)
 {
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
+    for (int i = 0; i < 3; i ++)
+        for (int j = 0; j < 3; j ++)
             a[i][j] = t.a[i][j];
     cen1 = t.row();
     cen2 = t.col();
@@ -219,7 +219,7 @@ bool spaceship :: bonus ()
 void setup() 
 {
   LCD.begin (16, 2);
-  for (int i = 4; i <= 7; i++)
+  for (int i = 4; i <= 7; i ++)
       pinMode (i, OUTPUT);
   pinMode (BUTTON1, OUTPUT);
   pinMode (BUTTON2, OUTPUT);
@@ -233,8 +233,8 @@ void setup()
 
 void cleanMatrix()                                                                               //functia marcheaza stingerea tuturor becurilor de pe ecran
 {
-      for (int i = 0; i < 8; i++)
-          for (int j = 0; j < 12; j++)
+      for (int i = 0; i < 8; i ++)
+          for (int j = 0; j < 12; j ++)
              matrix[i][j] = 0; 
 }
 
@@ -347,17 +347,17 @@ void popFrontEnemy (vehicle ** & b, int & n, bool type)                         
         if (n > 1)
         {
            b = new vehicle * [n - 1];
-           for (int i = 0; i < n - 1; i++)
+           for (int i = 0; i < n - 1; i ++)
                if (type)
                   b[i] = new car;
                else b[i] = new spaceship;
                   
-            for (int i = 1; i < n; i++)
+            for (int i = 1; i < n; i ++)
                 * (b[i - 1]) = * (c[i]);
          } 
          else b = NULL;
            
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i ++)
                  delete c[i]; 
         delete [] c;
         n --;  
@@ -408,8 +408,8 @@ void destroy (vehicle & a, int x, int y)                                        
                     matrix[j][i + 2] = 1;
                  }  
   delay (400);
-   for (int i = x - 1; i < x + 2; i++)
-       for (int j = y - 1; j < y + 2; j++)
+   for (int i = x - 1; i < x + 2; i ++)
+       for (int j = y - 1; j < y + 2; j ++)
              if (a[i - x + 1][j - y + 1])
               {
                  lc.setLed (0, j, i, false);
@@ -592,23 +592,23 @@ void saveScore(int points)                                                      
    }
 }
 
-void race (vehicle & a, vehicle ** & b, bool vtype, int & n, int level)                            //functia primeste ca parametri vehiculul cursor,
-{                                                                                                  //vectorul de adrese la adversari, tipul vehiculului
+void race (vehicle & a, vehicle ** & b, bool vtype, int & n, int level)                             //functia primeste ca parametri vehiculul cursor,
+{                                                                                                   //vectorul de adrese la adversari, tipul vehiculului
       long currentTime = millis();                                                                  //controlat, numarul de adversari si nivelul la care se afla
-      if (currentTime - time > 50)                                                                 //jucatorul la un moment dat
-      {                                                                                            //la fiecare 50 de milisecunde,
-        a.erase (px, py);                                                                          //se reactualizeaza imaginea zidurilor in pozitia curenta
+      if (currentTime - time > 50)                                                                  //jucatorul la un moment dat
+       {                                                                                            //la fiecare 50 de milisecunde,
+        a.erase (px, py);                                                                           //se reactualizeaza imaginea zidurilor in pozitia curenta
         wall (0, y1);                                                                                    
         wall (7, y2); 
         status();                                                                                  //se afiseaza progresul jucatorului
         direct (py, yj);                                                                           //Daca exista adversari pe ecran,
         if (n != 0)                                                                                //se mai adauga un obiect in vectorul de adversari doar daca
-        {                                                                                        //pozitia ultimului element din vector respecta conditia din instructiunea if
+        {                                                                                          //pozitia ultimului element din vector respecta conditia din instructiunea if
             int m = b[n - 1] -> row();
             if (m == aleator() + 5)
             {
                 pushBackEnemy (b, n, vtype);
-                if (bonusx == 8 && score % 8 == random (0, 8))                               //se genereaza bonus in functie de o regula "pseudoaleatoare"
+                if (bonusx == 8 && score % 8 == random (0, 8))                                     //se genereaza bonus in functie de o regula "pseudoaleatoare"
                   {
                       bonusx = random(-2, 0);
                       int t = b[n - 1] -> col();
@@ -619,13 +619,13 @@ void race (vehicle & a, vehicle ** & b, bool vtype, int & n, int level)         
             if (b[0] -> row() == 10)
             {
                score++;
-               popFrontEnemy (b, n, vtype);                                                     //daca primul element din vectorul de adversari are coordonata linie
-            }                                                                                  //egala cu 10, inseamna ca adversarul nu se mai afla pe ecran, adica vehiculul controlat
-        }                                                                                        //l - a depasit, iar jucatorul primeste un punct
+               popFrontEnemy (b, n, vtype);                                                       //daca primul element din vectorul de adversari are coordonata linie
+            }                                                                                     //egala cu 10, inseamna ca adversarul nu se mai afla pe ecran, adica vehiculul controlat
+        }                                                                                         //l - a depasit, iar jucatorul primeste un punct
         else pushBackEnemy (b, n, vtype);
       
    
-        if (currentTime - raceTime > speed (level))                                                //se modifica pozitia adversarilor pe matrice in functie de viteza stabilita pe nivel
+        if (currentTime - raceTime > speed (level))                                              //se modifica pozitia adversarilor pe matrice in functie de viteza stabilita pe nivel
         {       
            eraseEnemies (b, n);
            modifyEnemies (b, n);          
@@ -635,13 +635,13 @@ void race (vehicle & a, vehicle ** & b, bool vtype, int & n, int level)         
         }
 
                      
-        if (a.shape (px, py) == 0)                                                                 //daca pe pozitia curenta a cursorului se gaseste un adversar,      
-        {                                                                                    //jucatorul pierde viata si se restabilesc conditiile initiale de joc
+        if (a.shape (px, py) == 0)                                                               //daca pe pozitia curenta a cursorului se gaseste un adversar,      
+        {                                                                                        //jucatorul pierde viata si se restabilesc conditiile initiale de joc
             destroy (a, px, py); 
             reload (a, b, n);
             cleanMatrix();
             lives --;
-            if (lives == 0)                                                                    //daca jucatorul nu mai are vieti, se reia jocul de la meniul de intrare
+            if (lives == 0)                                                                      //daca jucatorul nu mai are vieti, se reia jocul de la meniul de intrare
             {
                  OK = 0;
                  saveScore(score);
@@ -656,8 +656,8 @@ void race (vehicle & a, vehicle ** & b, bool vtype, int & n, int level)         
 }
 
 
-void playAgain(int points)                                                                          //daca jucatorul obtine scorul maxim posibil, jocul se termina, se afiseaza pe LCD 
-{                                                                                                   //mesajul "YOU WON" si se restabilesc conditiile initiale de joc
+void playAgain(int points)                                                                     //daca jucatorul obtine scorul maxim posibil, jocul se termina, se afiseaza pe LCD 
+{                                                                                              //mesajul "YOU WON" si se restabilesc conditiile initiale de joc
     OK = 0;
     saveScore(10);
     lives = 0;
