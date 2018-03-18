@@ -28,7 +28,7 @@ bool recordBonus;                                                               
 class vehicle                                                                        
 {
   protected:
-     int **a;                                                                                   //matricea a corespunde reprezentarii unui obiect vehicul pe matrice
+     int ** a;                                                                                  //matricea a corespunde reprezentarii unui obiect vehicul pe matrice
      int cen1, cen2;                                                                            //cen1, cen2 - coordonatele centrului obiectului de tip vehicul
   public:
      vehicle();
@@ -45,40 +45,40 @@ class vehicle
 
 vehicle :: vehicle()                                                                             //constructorul clasei vehicul aloca memorie pentru matricea a,
 {                                                                                                //elementele matricei vor primi valori prin apelul constructorilor claselor derivate
-   a = new int *[3];
-    for (int i = 0; i < 3; i++)
+   a = new int * [3];
+    for (int i = 0; i < 3; i ++)
           a[i] = new int[3];
 }
 
 int vehicle :: shape (int x, int y)                                                              //shape() contureaza un obiect vehicul pe matrice in functie de 
 {                                                                                                //un centru dat. Metoda aprinde led-urile de pe pozitiile in care exista o componenta  
                                                                                                  //a vehiculului (pozitiile codificate cu 1 in matricea clasei). Daca un led pe care ar trebui
-    for (int j = y - 1; j < y + 2; j++)                                                          //conturat obiectul este deja aprins, vehiculul nu poate fi reprezentat, exceptand
-              for (int i = x - 1; i < x + 2; i++)                                                //led-ul corespunzator unui element bonus, codificat cu cifra 2 pe tabloul matrix
-                  if (a[i - x + 1][j - y + 1] == 1)                                  
-                  {
-                      if (matrix[j][i + 2] == 1)
-                      {
-                         if(recordBonus == 0)
-                           return 0;
-                      }
-                             
-                      if (matrix[j][i + 2] == 2)                                           //jucatorul primeste bonus
-                      {
-                         recordBonus = bonus();
-                         bonusx = 8;
-                      }
+    for (int j = y - 1; j < y + 2; j ++)                                                         //conturat obiectul este deja aprins, vehiculul nu poate fi reprezentat, exceptand
+         for (int i = x - 1; i < x + 2; i ++)                                                    //led-ul corespunzator unui element bonus, codificat cu cifra 2 pe tabloul matrix
+             if (a[i - x + 1][j - y + 1] == 1)                                  
+             {
+                 if (matrix[j][i + 2] == 1)
+                 {
+                     if(recordBonus == 0)
+                        return 0;
+                 }
+                          
+                 if (matrix[j][i + 2] == 2)                                                    //jucatorul primeste bonus
+                 {
+                      recordBonus = bonus();
+                      bonusx = 8;
+                 }
                                   
                               
-                      lc.setLed (0, j, i, true); 
-                      matrix[j][i + 2] = 1;
-                      if(recordBonus == 1)
-                         if((time - bonusTime) > 5000)
-                         {
-                              recordBonus = 0;
-                         }
-                                             
+                 lc.setLed (0, j, i, true); 
+                 matrix[j][i + 2] = 1;
+                 if(recordBonus == 1)
+                   if((time - bonusTime) > 5000)
+                   {
+                         recordBonus = 0;
                    }
+                                             
+              }
                 
      cen1 = x;
      cen2 = y;
@@ -88,13 +88,13 @@ int vehicle :: shape (int x, int y)                                             
 void vehicle :: erase (int x, int y)                                                              //erase() stinge led-urile in care se afla componentele vehiculului pe ecran
 {                                                                                                 //si notifica modificarile in tabloul matrix
       
-   for (int j = y - 1; j < y + 2; j++)
-        for (int i = x - 1; i < x + 2; i++)
-             if (a[i - x + 1][j - y + 1] == 1 && matrix[j][i + 2] == 1)
-             {
-                 lc.setLed (0, j, i, false);
-                 matrix[j][i + 2] = 0;
-             }
+   for (int j = y - 1; j < y + 2; j ++)
+        for (int i = x - 1; i < x + 2; i ++)
+            if (a[i - x + 1][j - y + 1] == 1 && matrix[j][i + 2] == 1)
+            {
+                lc.setLed (0, j, i, false);
+                matrix[j][i + 2] = 0;
+            }
     
 }
 
@@ -116,9 +116,9 @@ int & vehicle :: col ( )                                                        
 
 vehicle & vehicle :: operator = (vehicle & t)
 {
-    for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
-                   a[i][j] = t[i][j];
+    for (int i = 0; i < 3; i ++)
+        for (int j = 0; j < 3; j ++)
+            a[i][j] = t[i][j];
     cen1 = t.row();
     cen2 = t.col();
     return * this; 
@@ -126,8 +126,8 @@ vehicle & vehicle :: operator = (vehicle & t)
 
 vehicle :: ~ vehicle()
 {
-    for (int i = 0; i < 3; i++)
-            delete a[i];
+    for (int i = 0; i < 3; i ++)
+         delete a[i];
     delete [] a;
 }
 
@@ -144,22 +144,22 @@ car :: car()
     a[0][0] = 0;
     a[0][1] = 1;
     a[0][2] = 0;       
-    for (int i = 0; i < 3; i++)  
+    for (int i = 0; i < 3; i ++)  
            a[1][i] = 1;
     a[2][0] = 1;
     a[2][1] = 0;
     a[2][2] = 1;
     cen1 = - 2;                                                     
     if (random (0, 2) == 0)
-          cen2 = 2;
-         else cen2 = 5;
+        cen2 = 2;
+    else cen2 = 5;
 }
 
 bool car :: bonus ()
 {   
     
     if (lives < 3)                                
-           lives ++;
+       lives ++;
                
     return 0;
 }
@@ -167,8 +167,8 @@ bool car :: bonus ()
 car & car :: operator = (car & t)
 {
     for (int i = 0; i < 3; i++)
-           for (int j = 0; j < 3; j++)
-                 a[i][j] = t.a[i][j];
+        for (int j = 0; j < 3; j++)
+            a[i][j] = t.a[i][j];
     cen1 = t.row();
     cen2 = t.col();
     return * this; 
@@ -203,8 +203,8 @@ spaceship :: spaceship()
 spaceship & spaceship :: operator = (spaceship & t)
 {
     for (int i = 0; i < 3; i++)
-           for (int j = 0; j < 3; j++)
-                 a[i][j] = t.a[i][j];
+        for (int j = 0; j < 3; j++)
+            a[i][j] = t.a[i][j];
     cen1 = t.row();
     cen2 = t.col();
     return * this; 
@@ -234,8 +234,8 @@ void setup()
 void cleanMatrix()                                                                               //functia marcheaza stingerea tuturor becurilor de pe ecran
 {
       for (int i = 0; i < 8; i++)
-              for (int j = 0; j < 12; j++)
-                     matrix[i][j] = 0; 
+          for (int j = 0; j < 12; j++)
+             matrix[i][j] = 0; 
 }
 
 void drawBonus()                                                                                 //functia modifica pozitia unui element bonus pe matrice
@@ -248,27 +248,28 @@ void drawBonus()                                                                
       lc.setLed (0, bonusy, bonusx, true);
       matrix[bonusy][bonusx + 2] = 2;
     }
-    else if (bonusx == 7)
-         {
-              lc.setLed (0, bonusy, bonusx, false);
-              matrix[bonusy][bonusx + 2] = 0;
-              bonusx++; 
-         }
+    else 
+    if (bonusx == 7)
+    {
+        lc.setLed (0, bonusy, bonusx, false);
+        matrix[bonusy][bonusx + 2] = 0;
+        bonusx++; 
+    }
 }
 
  
 void eraseEnemies (vehicle ** & b, int n)                                                       //functia apeleaza metoda erase() pentru adversarii prezenti
 {                                                                                               //pe matrice la un moment dat
-  for (int i = 0; i < n; i++)
-     {
-       int p1 = b[i] -> row(), p2 = b[i] -> col();
-       b[i] -> erase (p1, p2);
-     }
+  for (int i = 0; i < n; i ++)
+  {
+     int p1 = b[i] -> row(), p2 = b[i] -> col();
+     b[i] -> erase (p1, p2);
+  }
 }
 
 int shapeEnemies (vehicle ** & b, int n)                                                       //functia apeleaza metoda shape() pentru adversarii prezenti
 {                                                                                              //pe matrice la un moment dat
-   for (int i = 0; i < n; i++)
+   for (int i = 0; i < n; i ++)
    {
       int p1 = b[i] -> row(), p2 = b[i] -> col();
       b[i] -> shape (p1, p2);                 
@@ -277,7 +278,7 @@ int shapeEnemies (vehicle ** & b, int n)                                        
 
 void modifyEnemies (vehicle ** & b, int n)                                                     //functia determina modificarea pozitiei adversarilor prezenti
 {                                                                                              //la un moment dat pe ecran in raport cu pozitia curenta a vehiculului
-   for (int i = 0; i < n; i++)                                                                 //cursor
+   for (int i = 0; i < n; i ++)                                                                //cursor
    {
       int m = b[i] -> row();
       m++;
@@ -290,27 +291,28 @@ void pushBackEnemy (vehicle ** & b, int & n, bool type)                         
     if (n > 0)
     {
        vehicle ** c = new vehicle * [n];
-       for (int i = 0; i < n; i++)
-               if (type)
-                   c[i] = new car;
-                  else c[i] = new spaceship;
-       for (int i = 0; i < n; i++)
-             * (c[i]) = * (b[i]);
+       for (int i = 0; i < n; i ++)
+           if (type)
+              c[i] = new car;
+         else c[i] = new spaceship;
+       
+      for (int i = 0; i < n; i ++)
+          * (c[i]) = * (b[i]);
 
-       for (int i = 0; i < n; i++)
-                 delete b[i];
+       for (int i = 0; i < n; i ++)
+            delete b[i];
        delete [] b;
        b = new vehicle * [n + 1];
-       for (int i = 0; i < n + 1; i++)
+       for (int i = 0; i < n + 1; i ++)
             if (type)
                 b[i] = new car;
-              else b[i] = new spaceship;
-       for (int i = 0; i < n; i++)
-               * (b[i]) = * (c[i]);
+            else b[i] = new spaceship;
+       for (int i = 0; i < n; i ++)
+            * (b[i]) = * (c[i]);
 
        b[n] -> row() = -2;
-       for (int i = 0; i < n; i++)
-                 delete c[i];
+       for (int i = 0; i < n; i ++)
+           delete c[i];
        delete [] c; 
     }
     else
@@ -319,7 +321,7 @@ void pushBackEnemy (vehicle ** & b, int & n, bool type)                         
       if (type)
          b[0] = new car;
       else b[0] = new spaceship;
-       b[0] -> row() = -2;
+      b[0] -> row() = -2;
     }
     
     n++;
@@ -331,15 +333,15 @@ void popFrontEnemy (vehicle ** & b, int & n, bool type)                         
     {
         vehicle ** c = new vehicle *[n];
 
-        for (int i = 0; i < n; i++)
-               if (type)
-                   c[i] = new car;
-                  else c[i] = new spaceship;
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i ++)
+             if (type)
+                 c[i] = new car;
+             else c[i] = new spaceship;
+        for (int i = 0; i < n; i ++)
              * (c[i]) = * (b[i]);
-
-        for (int i = 0; i < n; i++)
-                 delete b[i];   
+      
+        for (int i = 0; i < n; i ++)
+             delete b[i];   
         delete [] b;
         
         if (n > 1)
@@ -347,8 +349,8 @@ void popFrontEnemy (vehicle ** & b, int & n, bool type)                         
            b = new vehicle * [n - 1];
            for (int i = 0; i < n - 1; i++)
                if (type)
-                   b[i] = new car;
-              else b[i] = new spaceship;
+                  b[i] = new car;
+               else b[i] = new spaceship;
                   
             for (int i = 1; i < n; i++)
                 * (b[i - 1]) = * (c[i]);
@@ -364,13 +366,13 @@ void popFrontEnemy (vehicle ** & b, int & n, bool type)                         
 
 void wall (int x, int & y)                                                                    //functia contureaza o margine a pistei de curse
 {
-  lc.setRow (0, x, y);
-  switch (y)
-  {
-    case 126 : y = 63; break;
-    case 252: y = 126; break;
-    default : y = (y >> 1)|128;
-  }
+   lc.setRow (0, x, y);
+   switch (y)
+   {
+      case 126 : y = 63; break;
+      case 252: y = 126; break;
+      default : y = (y >> 1)|128;
+   }
 }
 
 void direct (int & y, int iny)                                                                //functia compara pozitia anterioara a vehiculului cursor
@@ -378,29 +380,28 @@ void direct (int & y, int iny)                                                  
       if (iny > 520)
       {
          if (y + 1 <= 5)
-            y++;
+            y ++;
       }
-      else
-      if (iny < 500)
-      {
-          if (y - 1 >= 2)
-             y --;
-      }
+      else if (iny < 500)
+           {
+               if (y - 1 >= 2)
+               y --;
+           }
 }
 
 void destroy (vehicle & a, int x, int y)                                                     //functia este apelata la accidentarea vehiculului cursor
 {                                                                                            //si genereaza un efect vizual asupra obiectului pentru instiintea 
-  for (int i = x - 1; i < x + 2; i++)                                                        //jucatorului de pierderea unei vieti
-       for (int j = y - 1; j < y + 2; j++)
+  for (int i = x - 1; i < x + 2; i ++)                                                       //jucatorului de pierderea unei vieti
+       for (int j = y - 1; j < y + 2; j ++)
               if ( a[i - x + 1][j - y + 1])
-                {
-                   lc.setLed (0, j, i, false);
-                   matrix[j][i + 2] = 0;
-                } 
+              {
+                 lc.setLed (0, j, i, false);
+                 matrix[j][i + 2] = 0;
+              } 
 
   delay (400);
-  for (int i = x - 1; i < x + 2; i++)
-       for (int j = y - 1; j < y + 2; j++)
+  for (int i = x - 1; i < x + 2; i ++)
+       for (int j = y - 1; j < y + 2; j ++)
               if (a[i - x + 1][j - y + 1])
                  {
                     lc.setLed (0, j, i, true);
@@ -411,8 +412,8 @@ void destroy (vehicle & a, int x, int y)                                        
        for (int j = y - 1; j < y + 2; j++)
              if (a[i - x + 1][j - y + 1])
               {
-                lc.setLed (0, j, i, false);
-                matrix[j][i + 2] = 0;
+                 lc.setLed (0, j, i, false);
+                 matrix[j][i + 2] = 0;
               }
   delay (400);
                
@@ -420,7 +421,7 @@ void destroy (vehicle & a, int x, int y)                                        
 
 int aleator()
 {
-  return random (0, 3);
+   return random (0, 3);
 }
 
 void reload (vehicle & a, vehicle ** & b, int & n)                                               //reload() reseteaza valorile implicite ale variabilelor globale la pierderea unei vieti
@@ -463,23 +464,23 @@ int speed (int i)                                                               
 int calcLevel (int points)                                                                       //functia decide nivelul la care ajunge jucatorul in functie de punctajul
 {                                                                                                //obtinut pana la un moment dat    
      if (points >= 0 && points < 40)
-             return 1;
+        return 1;
      if (points >= 40 && points < 100)
-             return 2;
+        return 2;
      if (points >= 100 && points < 180)
-             return 3;
+        return 3;
      if (points >= 180 && points < 200)
-             return 4;
+        return 4;
      if (points >= 200 && points < 320)
-             return 5;
+        return 5;
      if (points >= 320 && points < 450)
-             return 6;
+        return 6;
      if (points >= 450 && points < 550)
-             return 7;
+        return 7;
      if (points >= 550 && points < 620)
-             return 8;
+        return 8;
      if (points >= 620)
-             return 9;
+        return 9;
 }
 
 void load (int c)                                                                                //functia load se apeleaza doar la inceputul jocului 
@@ -489,21 +490,21 @@ void load (int c)                                                               
       LCD.setCursor (0, 0);
       LCD.print ("Incarcare...");
       LCD.setCursor (0, 1);
-      for (int i = 0; i < random (2, 5); i++)                                                    //se afiseaza de mai multe ori o imagine care sugereaza incarcarea jocului 
-         {                                                           
-                 for (int j = 2; j <= 5; j++)
-                 {
-                     lc.setLed (0, j, 3, true);
-                     lc.setLed (0, j, 4, true);
-                     delay (200);
-                  }
+      for (int i = 0; i < random (2, 5); i ++)                                                   //se afiseaza de mai multe ori o imagine care sugereaza incarcarea jocului 
+      {                                                           
+          for (int j = 2; j <= 5; j ++)
+          {
+              lc.setLed (0, j, 3, true);
+              lc.setLed (0, j, 4, true);
+              delay (200);
+          }
 
-                  for (int j = 2; j <= 5; j++)
-                  {
-                     lc.setLed (0, j, 3, false);
-                     lc.setLed (0, j, 4, false);
-                  }
-         }
+          for (int j = 2; j <= 5; j ++)
+          {
+               lc.setLed (0, j, 3, false);
+               lc.setLed (0, j, 4, false);
+          }
+     }
      lc.clearDisplay (0);                                                                       //se sterge ecranul si se contureaza o alta imagine prin care se sugereaza
      lc.setLed (0, 2, 5, true);                                                                 //incheierea procesului de incarcare
      delay (50);
@@ -554,7 +555,7 @@ void status()
   LCD.setCursor (0, 1);
   LCD.print ("Vieti: ");
   LCD.setCursor (8, 1);
-  for (int i = 0; i < lives; i++)
+  for (int i = 0; i < lives; i ++)
   {
      LCD.setCursor (8 + i, 1);
      LCD.print ("*");
@@ -567,10 +568,10 @@ void saveScore(int points)                                                      
   int max = 0;                                                                                //pe acesta.
   address = 0;
   while (address < 4)
-   {
+  {
        max = max + EEPROM.read(address);
        address ++;
-   }
+  }
   if (points > max)
    {
       address = 0;
@@ -587,7 +588,7 @@ void saveScore(int points)                                                      
             points = 0;
          }
          address++;
-       }  
+      }  
    }
 }
 
@@ -613,7 +614,7 @@ void race (vehicle & a, vehicle ** & b, bool vtype, int & n, int level)         
                       int t = b[n - 1] -> col();
                       bonusy = (t == 5)? 2 : 5;
                   }
-             }
+            }
                  
             if (b[0] -> row() == 10)
             {
@@ -713,7 +714,7 @@ void loop()
        if(score < 700)
           race (* a, b, vehicleType, ncars, calcLevel (score));                                     //daca jucatorul nu a atins scorul maxim de 700 de puncte, participa in continuae la cursa
        else if(score == 700)
-               playAgain(700);
+              playAgain(700);
        yj = analogRead (Y);
     }
 }
