@@ -1,8 +1,4 @@
-# Introducere în robotică cu Arduino - Tema 1
-
-Pârjoleanu Andi - Olivian, Grupa 251
-
-Joc ales : Curse (Racing game)
+# Joc de curse
 
 # Descriere : 
 
@@ -17,7 +13,7 @@ Componenta hardware a jocului cuprinde: placă Arduino Uno, matrice de LED-uri 8
 
 # Metodele de control:
 
-Jucătorul poate controla vehiculul cu care participă la cursă cu ajutorul unui joystick care citește poziții de pe axa absciselor. El trebuie să evite coliziunea cu adversarii prin schimbarea poziției inițiale a joystick-ului.
+Jucătorul poate controla vehiculul cu care participă la cursă cu ajutorul unui joystick, care citește poziții de pe axa absciselor. El trebuie să evite coliziunea cu adversarii prin schimbarea poziției inițiale a joystick-ului.
 Butoanele din circuit sunt folosite pentru pornirea jocului. Prin apăsarea unui buton, jucătorul își alege tipul de cursă la care participă. Butonul stâng corespunde cursei de navete spațiale, butonul drept corespunde cursei de mașini. După apăsarea unuia dintre butoane, jucătorul intră direct în cursă.
 
 # Progresul jucătorului:
